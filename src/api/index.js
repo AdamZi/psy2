@@ -1,26 +1,33 @@
 const express = require("express");
 const router = express.Router();
-const { getDogs, saveDog } = require("../db");
 
+const { getDogs, saveDog, deleteDog } = require("../db");
+
+function mapDogs(dogs) {
+  return dogs.map(dog => {
+    const age = Math.floor((Date.now() - Date.parse(dog.birth)) / 31556952000);
+    return {
+      _id: dog._id,
+      name: dog.name,
+      birth: dog.birth,
+      age: age,
+    };
+  });
+}
 router.get("/dogs", async (req, res) => {
-  dogs = (await getDogs()).reverse();
-  res.send(
-    dogs.map(dog => {
-      const age = Math.floor(
-        (Date.now() - Date.parse(dog.birth)) / 31556952000
-      );
-      return {
-        name: dog.name,
-        age: age,
-      };
-    })
-  );
+  const dogs = (await getDogs()).reverse();
+  res.send(mapDogs(dogs));
 });
 
 router.post("/dogs/add", async (req, res) => {
   console.log(req.body);
-  const mongoRes = await saveDog(req.body);
-  res.send(mongoRes);
+  const dogs = (await saveDog(req.body)).reverse();
+  res.send(mapDogs(dogs));
 });
 
+router.post("/dogs/delete", async (req, res) => {
+  console.log(req.body);
+  const dogs = (await deleteDog(req.body)).reverse();
+  res.send(dogs);
+});
 module.exports = router;

@@ -1,5 +1,5 @@
 //const dotenv = require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const client = new MongoClient(process.env.CONNECTIONSTRING, {
   useNewUrlParser: true,
@@ -17,8 +17,20 @@ const getDogs = async () => {
 };
 
 const saveDog = async dog => {
-  return client.db("animals").collection("dogs").insertOne(dog);
-  //return client.db("animals").collection("dogs").find({}).toArray();
+  const response = await client.db("animals").collection("dogs").insertOne(dog);
+  if (!response.acknowledged) throw Error("error writing to database");
+  return client.db("animals").collection("dogs").find({}).toArray();
 };
 
-module.exports = { getDogs, saveDog };
+const deleteDog = async id => {
+  console.log(id);
+  const response = await client
+    .db("animals")
+    .collection("dogs")
+    .deleteOne({ _id: ObjectId(id._id) });
+  console.log(response);
+  if (!response.acknowledged) throw Error("error writing to database");
+  return client.db("animals").collection("dogs").find({}).toArray();
+};
+
+module.exports = { getDogs, saveDog, deleteDog };
