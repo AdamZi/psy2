@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0aebe8fb.css",
+    "main.js": "/static/js/main.df5190f4.js",
+    "static/media/dogsimg.jpg": "/static/media/dogsimg.42670a7801020f63fd96.jpg",
+    "index.html": "/index.html",
+    "main.0aebe8fb.css.map": "/static/css/main.0aebe8fb.css.map",
+    "main.df5190f4.js.map": "/static/js/main.df5190f4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0aebe8fb.css",
+    "static/js/main.df5190f4.js"
+  ]
+}
