@@ -5,8 +5,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const myPort = process.env.PORT || 8080;
 const api = require("./api");
-
-app.use(express.static(__dirname + "/public"));
+console.log(__dirname);
+app.use(express.static(__dirname + "/../public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/api", api);

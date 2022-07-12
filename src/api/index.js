@@ -28,6 +28,6 @@ router.post("/dogs/add", async (req, res) => {
 router.post("/dogs/delete", async (req, res) => {
   console.log(req.body);
   const dogs = (await deleteDog(req.body)).reverse();
-  res.send(dogs);
+  res.send(mapDogs(dogs));
 });
 module.exports = router;
