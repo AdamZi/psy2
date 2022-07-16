@@ -33,4 +33,15 @@ const deleteDog = async id => {
   return client.db("animals").collection("dogs").find({}).toArray();
 };
 
-module.exports = { getDogs, saveDog, deleteDog };
+const updateDog = async dog => {
+  await client
+    .db("animals")
+    .collection("dogs")
+    .updateOne(
+      { _id: ObjectId(dog._id) },
+      { $set: { name: dog.name, birth: dog.birth } }
+    );
+  return client.db("animals").collection("dogs").find({}).toArray();
+};
+
+module.exports = { getDogs, saveDog, deleteDog, updateDog };

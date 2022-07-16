@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { getDogs, saveDog, deleteDog } = require("../db");
+const { getDogs, saveDog, deleteDog, updateDog } = require("../db");
 
 function mapDogs(dogs) {
   return dogs.map(dog => {
@@ -30,4 +30,11 @@ router.post("/dogs/delete", async (req, res) => {
   const dogs = (await deleteDog(req.body)).reverse();
   res.send(mapDogs(dogs));
 });
+
+router.post("/dogs/update", async (req, res) => {
+  console.log(req.body);
+  const dogs = (await updateDog(req.body)).reverse();
+  res.send(mapDogs(dogs));
+});
+
 module.exports = router;
